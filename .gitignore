@@ -1,0 +1,5 @@
+# igored files - in order: "global" directories, directories, "global" files, files. "global" - means recursive, e.g. *.iml or .DS_Store
+/.vagrant
+/node_modules
+.DS_Store
+/.idea

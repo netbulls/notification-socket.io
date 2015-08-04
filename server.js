@@ -50,6 +50,19 @@ app.post('/api/push', function (req, res) {
 	}
 });
 
+app.get('/status/ping', function (req, res) {
+	res.send('pong')
+});
+
+
+app.get('/status/info', function (req, res) {
+	res.setHeader('Content-Type', 'application/json');
+	var info = {
+		'name': 'socket.io-server'
+	};
+	res.send(info)
+});
+
 app.listen(app.get('port'), function () {
 	console.log('Node app is running on port', app.get('port'));
 });

@@ -1,5 +1,4 @@
 var app = require('express')();
-var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var bodyParser = require('body-parser');
 
@@ -48,4 +47,6 @@ app.post('/api/push', function (req, res) {
 	}
 });
 
-http.listen(3000);
+app.listen(app.get('port'), function() {
+	console.log('Node app is running on port', app.get('port'));
+});

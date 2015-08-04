@@ -117,15 +117,18 @@ app.put('/api/:userId/register', function (req, res) {
 /**
  * Api to send message to user.
  */
-app.post('/api/push', function (req, res) {
+app.post('/api/:userId/push', function (req, res) {
 	if (req.header('X-AUTH-TOKEN') != process.env['AUTH_TOKEN']) {
 		res.status(401).send();
-	} else if (req.body.to && req.body.message) {
-		pushService.pushMessage(req.body.to, req.body.message);
-		res.send();
-	}
-	else {
-		res.status(400).send('Bad Request');
+	} else {
+		var userId = req.params['userId'];
+		if (userId && req.body.message) {
+			pushService.pushMessage(userId, req.body.message);
+			res.send();
+		}
+		else {
+			res.status(400).send('Bad Request');
+		}
 	}
 });
 

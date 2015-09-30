@@ -8,6 +8,11 @@ app.set('port', (process.env.PORT || 3000));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+/**
+ * Configuration from package.json
+ */
+var pjson = require('./package.json');
+
 var pushService = (function () {
 	var connections = {};
 	return {
@@ -135,17 +140,18 @@ app.post('/api/:userId/push', function (req, res) {
 /**
  * Ping endpoint.
  */
-app.get('/status/ping', function (req, res) {
+app.get('/api/status/ping', function (req, res) {
 	res.send('pong')
 });
 
 /**
  * Info endpoint.
  */
-app.get('/status/info', function (req, res) {
+app.get('/api/status/info', function (req, res) {
 	res.setHeader('Content-Type', 'application/json');
 	var info = {
-		'name': 'socket.io-server'
+		'name': pjson.name,
+		'version': pjson.version
 	};
 	res.send(info)
 });

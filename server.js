@@ -13,7 +13,7 @@ app.use(bodyParser.json());
  */
 var pjson = require('./package.json');
 
-var pushService = (function () {
+var pushService = (function() {
 	var connections = {};
 	return {
 		/**
@@ -21,7 +21,7 @@ var pushService = (function () {
 		 * @param userId id of user.
 		 * @param connectionId id of connection.
 		 */
-		registerUser: function (userId, connectionId) {
+		registerUser: function(userId, connectionId) {
 			if (connections[userId] === undefined) {
 				connections[userId] = {};
 			}
@@ -37,7 +37,7 @@ var pushService = (function () {
 		 * @param socket socket.
 		 * @returns {boolean} if socket was registered or not, if false then you have to do everything again.
 		 */
-		registerSocket: function (userId, connectionId, socket) {
+		registerSocket: function(userId, connectionId, socket) {
 			if (connections[userId] != null && connections[userId][connectionId] == null) {
 				socket.userId = userId;
 				socket.connectionId = connectionId;
@@ -53,7 +53,7 @@ var pushService = (function () {
 		 * Remove connection.
 		 * @param socket socket to remove.
 		 */
-		removeConnection: function (socket) {
+		removeConnection: function(socket) {
 			var userId = socket.userId;
 			var connectionId = socket.connectionId;
 			if (userId && connectionId && connections[userId] && connections[userId][connectionId]) {
@@ -66,7 +66,7 @@ var pushService = (function () {
 		 * @param userId id of user.
 		 * @param message message.
 		 */
-		pushMessage: function (userId, message) {
+		pushMessage: function(userId, message) {
 			var userConnections = connections[userId];
 			if (userConnections) {
 				for (var connectionId in  userConnections) {
@@ -85,18 +85,18 @@ var pushService = (function () {
 /**
  * Handle connection to socket.io.
  */
-io.on('connection', function (socket) {
+io.on('connection', function(socket) {
 	/**
 	 * On registered socket from client.
 	 */
-	socket.on('register', function (userId, connectionId) {
+	socket.on('register', function(userId, connectionId) {
 		pushService.registerSocket(userId, connectionId, socket);
 	});
 
 	/**
 	 * On disconnected socket.
 	 */
-	socket.on('disconnect', function () {
+	socket.on('disconnect', function() {
 		pushService.removeConnection(socket);
 	});
 });
@@ -104,7 +104,7 @@ io.on('connection', function (socket) {
 /**
  * Api to register user.
  */
-app.put('/api/:userId/register', function (req, res) {
+app.put('/api/:userId/register', function(req, res) {
 	if (req.header('X-AUTH-TOKEN') != process.env['AUTH_TOKEN']) {
 		res.status(401).send();
 	} else {
@@ -122,7 +122,7 @@ app.put('/api/:userId/register', function (req, res) {
 /**
  * Api to send message to user.
  */
-app.post('/api/:userId/push', function (req, res) {
+app.post('/api/:userId/push', function(req, res) {
 	if (req.header('X-AUTH-TOKEN') != process.env['AUTH_TOKEN']) {
 		res.status(401).send();
 	} else {
@@ -140,14 +140,14 @@ app.post('/api/:userId/push', function (req, res) {
 /**
  * Ping endpoint.
  */
-app.get('/api/status/ping', function (req, res) {
+app.get('/api/status/ping', function(req, res) {
 	res.send('pong')
 });
 
 /**
  * Info endpoint.
  */
-app.get('/api/status/info', function (req, res) {
+app.get('/api/status/info', function(req, res) {
 	res.setHeader('Content-Type', 'application/json');
 	var info = {
 		'name': pjson.name,
@@ -156,6 +156,6 @@ app.get('/api/status/info', function (req, res) {
 	res.send(info)
 });
 
-http.listen(app.get('port'), function () {
+http.listen(app.get('port'), function() {
 	console.log('Node app is running on port', app.get('port'));
 });

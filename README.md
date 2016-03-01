@@ -56,7 +56,7 @@ We recommend that it is used in the following way but of course it can be modifi
 
 ### Register a client app
 
-![Diagram of register process](https://github.com/netbulls/notification-socket.io/doc/images/register.png)
+![Diagram of register process](https://raw.githubusercontent.com/netbulls/notification-socket.io/master/doc/images/register.png)
 
 > IMPORTANT:
 > each request from your backend to notification-socket.io has to be authenticated by a 
@@ -93,7 +93,7 @@ We recommend that it is used in the following way but of course it can be modifi
 
 ### Send a push notification
 
-![Diagram of sending push notification](https://github.com/netbulls/notification-socket.io/doc/images/send.png)
+![Diagram of sending push notification](https://raw.githubusercontent.com/netbulls/notification-socket.io/master/doc/images/send.png)
    
 1. When your backend application wants to send a push notification to a client just execute: 
 

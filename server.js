@@ -58,7 +58,7 @@ var pushService = (function() {
 			var connectionId = socket.connectionId;
 			if (userId && connectionId && connections[userId] && connections[userId][connectionId]) {
 				console.log('Removed socket for user ' + userId + ' and connection: ' + connectionId.substring(0, 4) + '***');
-				delete connections[socket.connectionId];
+				delete connections[userId][connectionId];
 			}
 		},
 		/**
